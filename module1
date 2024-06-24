@@ -1,0 +1,40 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract ExampleContract {
+    address public owner;
+    uint256 public value;
+
+    constructor() {
+        owner = msg.sender; // Setting the contract deployer as the owner
+    }
+
+    // Function to set a new value
+    function setValue(uint256 newValue) public {
+        // Ensure the new value is greater than zero
+        require(newValue > 0, "Value must be greater than zero");
+        value = newValue;
+    }
+
+    // Function to reset the value, can only be called by the owner
+    function resetValue() public {
+        // Ensure only the owner can reset the value
+        require(msg.sender == owner, "Only the owner can reset the value");
+        value = 0;
+    }
+
+    // Function to test assert statement
+    function testAssert() public view {
+        // Assert that the value is never negative
+        assert(value >= 0);
+    }
+
+    // Function that uses revert to handle custom errors
+    function safeDivide(uint256 a, uint256 b) public pure returns (uint256) {
+        // Ensure the divisor is not zero
+        if (b == 0) {
+            revert("Division by zero is not allowed");
+        }
+        return a / b;
+    }
+    }
